@@ -5,44 +5,46 @@ import { create, all } from 'mathjs'
 
 
 function App() {
-  const [num, setNum] = useState('');
-  const [ans, setAns] = useState('');
+  const [num, setNum] = useState('');//算式
+  const [ans, setAns] = useState('');//答案
+  //mathjs套件
   const config = {}
   const math = create(all, config)
-  const lastWord = num.toString().substring(num.length - 1, num.length);
+
+  const lastWord = num.toString().substring(num.length - 1, num.length);//抓num最後一個字
   const numRef = useRef(null);
   const ansRef = useRef(null);
 
   const pressNumber = (n) => {
-    setAns('');
-    if (n === '00') {
-      if (num === '0') {
+    setAns('');//答案清空
+    if (n === '00') {//按下00
+      if (num === '0') {//如果只有0 直接return
         return
       } else {
-        switch (lastWord) {
+        switch (lastWord) {//如果尾巴是加減乘除或空的
           case '+':
           case '-':
           case 'x':
           case '÷':
           case '':
-            setNum(num + '0')
+            setNum(num + '0')//只加一個零
             break;
           default:
-            setNum(num + n.toString());
+            setNum(num + n.toString());//預設加兩個
             break;
         }
       }
-    } else if (n === '.' && num === '') {
-      setNum('0.')
+    } else if (n === '.' && num === '') {//按下．且num是空的
+      setNum('0.')//加0.
     } else {
-      setNum(num + n.toString());
+      setNum(num + n.toString());//剩下按什麼加什麼
     }
   }
   const add = () => {
     setAns('');
     if (lastWord === '÷' || lastWord === 'x' || lastWord === '-' || lastWord === '+') {
-      setNum(num.replace(/.$/, '+'))
-    } else if (ans !== '') {
+      setNum(num.replace(/.$/, '+'))//尾巴是加減乘除換成加
+    } else if (ans !== '') {//有ans就直接ans上加號
       setNum(ans + "+")
     }
     else {
@@ -75,7 +77,7 @@ function App() {
   }
   const Subtraction = () => {
     setAns('');
-    if (lastWord === '-' || lastWord === '+') {
+    if (lastWord === '-' || lastWord === '+') {//乘除不用換掉 因為有負數
       setNum(num.replace(/.$/, '-'))
     } else if (ans !== '') {
       setNum(ans + "-")
@@ -86,10 +88,10 @@ function App() {
   }
   const equal = () => {
 
-    if (num === '') {
+    if (num === '') {//算式為空 直接return
       return;
     }
-    const result = num.replace(/[x ÷]/g,
+    const result = num.replace(/[x ÷]/g,//把乘除換成 '*' '/'符合套件格式
       (match) => {
         if (match === 'x') {
           return '*'
@@ -99,33 +101,33 @@ function App() {
       }
     );
     try {
-      setNum('')
+      setNum('')//按下等於後 清空算式
 
-      const takeComma = result.replace(/,/g, '');
+      const takeComma = result.replace(/,/g, '');//拿掉逗號以符合套件格式
 
-      setAns(math.evaluate(takeComma));
+      setAns(math.evaluate(takeComma));//math套件把字串轉成算式再return結果
 
     } catch (error) {
-      alert('發生了一點問題 請重新操作')
+      alert('發生了一點問題 請重新操作')//catch 捕捉錯誤
     }
   }
 
 
-  const clear = () => {
+  const clear = () => {//清空函式
     setNum('');
     setAns('');
   }
-  const fallBack = () => {
-    setNum(num.toString().slice(0, -1))
+  const fallBack = () => {//倒退函式
+    setNum(num.toString().slice(0, -1))//slice切到0是開始-1代表倒數第一個字
   }
 
+  if (numRef.current) {//螢幕自動滾動到新增的數字
+    numRef.current.scrollRight = numRef.current.scrollWidth;
+  }
   useEffect(() => {
 
-    if (numRef.current) {
-      numRef.current.scrollLeft = numRef.current.scrollWidth;
-    }
     
-    if (ans.length > 10 && ans.length <= 15) {
+    if (ans.length > 10 && ans.length <= 15) {//根據字數 改變字的大小 防止跑版
       ansRef.current.style.fontSize = '40px'
     } else if (ans.length > 15 && ans.length <= 20) {
       ansRef.current.style.fontSize = '24px'
@@ -137,7 +139,7 @@ function App() {
     }
 
     const takeComma = num.replace(/,/g, '');
-    const addComma = takeComma.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    const addComma = takeComma.replace(/\B(?=(\d{3})+(?!\d))/g, ",");//加上逗號 每三位加上逗號
     setNum(addComma);
     const addCommaAns = ans.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     setAns(addCommaAns);
@@ -145,6 +147,8 @@ function App() {
 
 
   }, [num, ans])
+
+  
 
 
 
