@@ -1,38 +1,87 @@
-.App {
+.back {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #E8E8E8
+}
+
+.cal {
+  position: absolute;
+  width: 350px;
+  height: 525px;
+  background: #062145 0% 0% no-repeat padding-box;
+  box-shadow: 0px 20px 40px #00000066;
+  border-radius: 20px;
+}
+
+.top {
+  width: 100%;
+  height: 109px;
+  background: #041936 0% 0% no-repeat padding-box;
+  border-radius: 20px 20px 0px 0px;
+}
+
+.under>.row>.col {
   text-align: center;
+  font: normal normal 300 24px/28px Roboto;
+  letter-spacing: 0px;
+  color: #FFFFFF;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.under>div>span {
+  text-align: center;
+  font: normal normal 300 24px/28px Roboto;
+  letter-spacing: 0px;
+  color: #FFFFFF;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.symbol {
+  max-width: 72px;
+  height: 64px;
+  background: #041936 0% 0% no-repeat padding-box;
+  border-radius: 16px;
+  letter-spacing: 0px;
+  color: #FFFFFF;
+  text-align: center;
+  margin-right: 8px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.symbol>span {
+  font: normal normal 24px/28px Roboto;
+  font-weight: 500;
+  letter-spacing: 0px;
+  color: #FFFFFF;
 }
 
-.App-link {
-  color: #61dafb;
+.cal-area {
+  height: 19px;
+  /* UI Properties */
+  text-align: right;
+  font: normal normal normal 16px/16px Roboto;
+  letter-spacing: 0px;
+  color: #00C4FF;
+  opacity: 1;
+  margin-top: 16px;
+  margin-right: 20px;
+  overflow: hidden;
+  
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.ans-area {
+  height: 66px;
+  /* UI Properties */
+  text-align: right;
+  font: normal normal normal 56px/56px Roboto;
+
+  letter-spacing: 0px;
+  color: #FFFFFF;
+  margin-right: 20px;
+  overflow: hidden;
+
+}
+
+
+.col,
+.col-6 {
+  cursor: pointer;
 }
